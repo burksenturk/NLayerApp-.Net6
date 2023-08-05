@@ -13,7 +13,7 @@ namespace NLayer.Core.Models
         public int Height { get; set; }
         public int Width { get; set; }
 
-        public int ProductId { get; set; }
+        public int ProductId { get; set; }  //bire-bir
         public Product Product { get; set; }
     }
 }

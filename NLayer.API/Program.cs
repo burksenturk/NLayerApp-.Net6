@@ -18,7 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();// <bununla karþýlasýrsan,bunu nesne örneði alacaksýn>
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>)); //generic olduklarý için typeof kullandýk
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 
@@ -28,7 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>
     {
-        option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
+        option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name); // api ye AppDbContext in Repoda oldugunu söyledik. direkt db adý da verebilirdikama böyle daha generic. Bu sayede Type güvenli oluyor.
     });
 });
 

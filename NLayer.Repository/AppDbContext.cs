@@ -20,10 +20,9 @@ namespace NLayer.Repository
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)  //Entity konfigirasyonlarını yapıyoruz.
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //konfigüreayonları uygula.
-
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //konfigüreayonları uygula. tüm assembly i tarar
 
             base.OnModelCreating(modelBuilder);
         }

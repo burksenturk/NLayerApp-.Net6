@@ -11,12 +11,12 @@ namespace NLayer.Core.DTOs
     {
         public T Data { get; set; }
 
-        [JsonIgnore]
+        [JsonIgnore]  //clientlara StatusCode dönmüyoruz kendi kodumuz içerisinde görücez.. json a dönüştürürken ignore et. CClientlar endpointe bir istek yaptıgında zaten statuscode elde ediyorlar
         public int StatusCode { get; set; }
 
         public List<string> Errors { get; set; }
 
-        public static CustomResponseDto<T> Success(int statusCode, T data)
+        public static CustomResponseDto<T> Success(int statusCode, T data)  //static factory metot(design pattern) denir bu yönteme
         {
             return new CustomResponseDto<T> { Data = data, StatusCode = statusCode };
         }
