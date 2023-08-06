@@ -16,7 +16,7 @@ namespace NLayer.Repository
         {
             //var p = new Product() { ProductFeature = new ProductFeature() { } }   //product a bağlı ProductFeature üretmek istiyorsam bu şekil yapabilirim
         }
-
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductFeature> ProductFeatures { get; set; }
 
