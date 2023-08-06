@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NLayer.API.Filters;
 using NLayer.Core.DTOs;
 using NLayer.Core.Models;
 using NLayer.Core.Services;
@@ -15,7 +16,7 @@ namespace NLayer.API.Controllers
         //private readonly IService<Product> _service;
         private readonly IProductService _productService;
 
-		public ProductsController(IMapper mapper, IService<Product> service, IProductService productService)
+		public ProductsController(IMapper mapper, IProductService productService)
 		{
 			_mapper = mapper;
 			//_service = service;
@@ -35,6 +36,9 @@ namespace NLayer.API.Controllers
             var productsDtos = _mapper.Map<List<ProductDto>>(products.ToList()); //async oludugunda IEnumarble döndüğü için ToList koydum
             return CreateActionResult(CustomResponseDto<List<ProductDto>>.Success(200, productsDtos));
         }
+
+        //direkt attriute gibi kullanamam. Çünkü bir filter ctor da bir parametre alıyorsa mutlaka ServiceFilter üzerinden kullanmamız lazım. belirtmiş oldugumuz tipide program.cs tarafına eklememiz lazım.
+        [ServiceFilter(typeof(NotFoundFilter<Product>))] //filter daha metoda girmeden hatayı fırlattı
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -42,6 +46,7 @@ namespace NLayer.API.Controllers
             var productsDtos = _mapper.Map<ProductDto>(products);
             return CreateActionResult(CustomResponseDto<ProductDto>.Success(200, productsDtos));
         }
+
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {
