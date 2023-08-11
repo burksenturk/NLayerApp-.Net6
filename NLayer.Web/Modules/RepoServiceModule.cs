@@ -12,27 +12,27 @@ using Module = Autofac.Module;  //modül autofac tin modülünü kullansın.
 
 namespace NLayer.Web.Modules
 {
-	public class RepoServiceModule : Module
-	{
-		protected override void Load(ContainerBuilder builder)
-		{
-			builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
-			builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();
+    public class RepoServiceModule : Module
+    {
+        protected override void Load(ContainerBuilder builder)
+        {
+            builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();
 
-			builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
+            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-			var apiAssembly = Assembly.GetExecutingAssembly();
-			var repoAssembly = Assembly.GetAssembly(typeof(AppDbContext)); //AppDbContext den katmanın adını anlıyor dinamik olarak.
-			var serviceAssembly = Assembly.GetAssembly(typeof(MapProfile)); //bu da öyle
+            var apiAssembly = Assembly.GetExecutingAssembly();
+            var repoAssembly = Assembly.GetAssembly(typeof(AppDbContext)); //AppDbContext den katmanın adını anlıyor dinamik olarak.
+            var serviceAssembly = Assembly.GetAssembly(typeof(MapProfile)); //bu da öyle
 
-			builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope(); //sonu Repository olanlar...
+            builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Repository")).AsImplementedInterfaces().InstancePerLifetimeScope(); //sonu Repository olanlar...
 
-			builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope();
-
-
+            builder.RegisterAssemblyTypes(apiAssembly, repoAssembly, serviceAssembly).Where(x => x.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope();
 
 
-			// InstancePerLifetimeScope => Scope a denk geliyor EfCore daki
-		}
-	}
+
+
+            // InstancePerLifetimeScope => Scope a denk geliyor EfCore daki
+        }
+    }
 }

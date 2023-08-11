@@ -26,6 +26,12 @@ namespace NLayer.API.Filters
 
 			var id = (int)idValue;
 			var anyEntity = await _service.AnyAsync(x => x.Id == id);
+
+			if(anyEntity)
+			{
+				await next.Invoke();
+				return;
+			}
 			//else
 			context.Result = new NotFoundObjectResult(CustomResponseDto<NoContentDto>.Fail(404, $"{typeof(T).Name}({id} not found)"));
 		}
