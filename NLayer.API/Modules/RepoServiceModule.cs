@@ -22,7 +22,7 @@ namespace NLayer.API.Modules
 
 			builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-			builder.RegisterType<ProductServiceWtihCahching>().As<IProductService>();
+			//builder.RegisterType<ProductServiceWtihCahching>().As<IProductService>();
 
 
 			var apiAssembly = Assembly.GetExecutingAssembly();

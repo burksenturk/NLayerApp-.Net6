@@ -7,6 +7,7 @@ using NLayer.Service.Mapping;
 using NLayer.Service.Validations;
 using NLayer.Web;
 using NLayer.Web.Modules;
+using NLayer.Web.Services;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,16 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name); // api ye AppDbContext in Repoda oldugunu söyledik. direkt db adý da verebilirdikama böyle daha generic. Bu sayede Type güvenli oluyor.
     });
 });
+
+builder.Services.AddHttpClient<ProductApiService>(opt =>  //api-mvc haberleþmesi için - appsetting da tanýmladýgýmýz url li yazdýk
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+builder.Services.AddHttpClient<CategoryApiService>(opt =>
+{
+    opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+});
+
 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
 
